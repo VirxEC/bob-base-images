@@ -34,4 +34,4 @@ jobs:
       run: |
         echo "Building and pushing image for ${{ matrix.docker.dir }} with name ${{ matrix.docker.name }}"
         docker build -f ${{ matrix.docker.dir }}/Dockerfile -t ghcr.io/${{ github.repository }}/${{ matrix.docker.name }}:latest .
-        docker push ghcr.io/${{ github.repository }}/${{ matrix.docker.name }}:latest
+        docker push ghcr.io/${{ github.repository.toLowerCase() }}/${{ matrix.docker.name }}:latest
