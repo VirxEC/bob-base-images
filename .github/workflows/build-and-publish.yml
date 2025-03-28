@@ -37,5 +37,5 @@ jobs:
       run: |
         repo_name=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
         echo "Building and pushing image for ${{ matrix.docker.dir }} with name ${{ matrix.docker.name }}"
-        docker build -f ${{ matrix.docker.dir }}/Dockerfile -t ghcr.io/$repo_name/${{ matrix.docker.name }}:latest .
-        docker push ghcr.io/$repo_name/${{ matrix.docker.name }}:latest
+        docker build -f ${{ matrix.docker.dir }}/Dockerfile -t ghcr.io/$repo_name/${{ matrix.docker.name }}:v1 .
+        docker push ghcr.io/$repo_name/${{ matrix.docker.name }}:v1
