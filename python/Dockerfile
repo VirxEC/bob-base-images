@@ -12,15 +12,15 @@ RUN apt install -y git libarchive-tools binutils
 WORKDIR "/usr/src/win"
 
 # Install windows python
-RUN wget https://github.com/astral-sh/python-build-standalone/releases/download/20250115/cpython-3.12.8+20250115-x86_64-pc-windows-msvc-install_only_stripped.tar.gz -O python.tar.gz
+RUN wget https://github.com/astral-sh/python-build-standalone/releases/download/20250808/cpython-3.12.11+20250808-x86_64-pc-windows-msvc-install_only_stripped.tar.gz -O python.tar.gz
 RUN bsdtar -xf python.tar.gz
 
 # Install windows uv
-RUN wget https://github.com/astral-sh/uv/releases/download/0.5.6/uv-x86_64-pc-windows-msvc.zip -O uv.zip
+RUN wget https://github.com/astral-sh/uv/releases/download/0.8.9/uv-x86_64-pc-windows-msvc.zip -O uv.zip
 RUN bsdtar -xf uv.zip
 
 # Install windows git (for pip git dependencies)
-RUN wget https://github.com/git-for-windows/git/releases/download/v2.49.0.windows.1/MinGit-2.49.0-64-bit.zip -O git.zip
+RUN wget https://github.com/git-for-windows/git/releases/download/v2.50.1.windows.1/MinGit-2.50.1-64-bit.zip -O git.zip
 RUN mkdir git
 RUN bsdtar -xf git.zip --directory git
 
@@ -28,10 +28,10 @@ RUN bsdtar -xf git.zip --directory git
 WORKDIR "/usr/src/linux"
 
 # Install linux python
-RUN wget https://github.com/astral-sh/python-build-standalone/releases/download/20250317/cpython-3.12.9+20250317-x86_64_v2-unknown-linux-gnu-install_only_stripped.tar.gz -O python.tar.gz
+RUN wget https://github.com/astral-sh/python-build-standalone/releases/download/20250808/cpython-3.12.11+20250808-x86_64_v2-unknown-linux-gnu-install_only_stripped.tar.gz -O python.tar.gz
 RUN bsdtar -xf python.tar.gz
 
 # Install linux uv
-RUN wget https://github.com/astral-sh/uv/releases/download/0.6.10/uv-x86_64-unknown-linux-gnu.tar.gz -O uv.tar.gz
+RUN wget https://github.com/astral-sh/uv/releases/download/0.8.9/uv-x86_64-unknown-linux-gnu.tar.gz -O uv.tar.gz
 RUN bsdtar -xf uv.tar.gz
 RUN mv uv-*/** .
