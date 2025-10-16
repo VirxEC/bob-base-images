@@ -35,7 +35,7 @@ jobs:
         docker push ghcr.io/$repo_name/${{ matrix.docker.name }}:v2
 
   build-windows:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     strategy:
       matrix:
