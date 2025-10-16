@@ -1,10 +1,12 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2022
 
-# Use PowerShell for shell commands
-SHELL ["pwsh", "-Command"]
+# Switch to PowerShell
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop';"]
 
 # Download & install Git
-RUN curl.exe -L "https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.2/Git-2.51.0.2-64-bit.exe" -o GitInstaller.exe
+RUN Invoke-WebRequest `
+    -Uri "https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.2/Git-2.51.0.2-64-bit.exe" `
+    -OutFile "GitInstaller.exe"
 RUN Start-Process -FilePath .\GitInstaller.exe -ArgumentList '/VERYSILENT', '/NORESTART', '/SUPPRESSMSGBOXES' -Wait
 
 # Add Git Bash to PATH
@@ -23,6 +25,7 @@ RUN wget https://github.com/astral-sh/uv/releases/download/0.9.3/uv-x86_64-pc-wi
     tar -xf uv.tar.gz && \
     mv uv-*/** .
 
+# Switch back to CMD
 SHELL ["cmd", "/S", "/C"]
 
 # Point UV to Python
