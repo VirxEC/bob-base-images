@@ -7,25 +7,22 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop';"]
 RUN Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.2/Git-2.51.0.2-64-bit.exe" -OutFile "GitInstaller.exe"
 RUN Start-Process -FilePath .\GitInstaller.exe -ArgumentList '/VERYSILENT', '/NORESTART', '/SUPPRESSMSGBOXES' -Wait
 
-# Add Git Bash to PATH
-RUN setx PATH "$($env:PATH);'C:\\Program Files\\Git\\bin';'C:\\Program Files\\Git\\usr\\bin'"
-
-# Switch to Git Bash
-SHELL ["C:\\Program Files\\Git\\bin\\bash.exe", "-c"]
-
-WORKDIR "C:/usr/src/windows"
+WORKDIR "C:\\usr\\src\\windows"
 
 # Install python
-RUN curl -L "https://github.com/astral-sh/python-build-standalone/releases/download/20251014/cpython-3.12.12+20251014-x86_64-pc-windows-msvc-install_only_stripped.tar.gz" -o python.tar.gz
-RUN tar -xf python.tar.gz
+RUN Invoke-WebRequest "https://github.com/astral-sh/python-build-standalone/releases/download/20251014/cpython-3.12.12+20251014-x86_64-pc-windows-msvc-install_only_stripped.tar.gz" -OutFile python.tar.gz
+RUN New-Item -ItemType Directory -Path python;
+RUN gzip -d -c python.tar.gz > python.tar
+RUN tar -xf python.tar -C python
+RUN Remove-Item python.tar.gz, python.tar
 
 # Install uv
-RUN curl -L "https://github.com/astral-sh/uv/releases/download/0.9.3/uv-x86_64-pc-windows-msvc.zip" -o uv.tar.gz
-RUN tar -xf uv.tar.gz
-RUN mv uv-*/** .
-
-# Switch back to CMD
-SHELL ["cmd", "/S", "/C"]
+RUN Invoke-WebRequest "https://github.com/astral-sh/uv/releases/download/0.9.3/uv-x86_64-pc-windows-msvc.zip" -OutFile uv.tar.gz
+RUN New-Item -ItemType Directory -Path uv;
+RUN gzip -d -c uv.tar.gz > uv.tar
+RUN tar -xf uv.tar -C uv
+RUN Remove-Item uv.tar.gz, uv.tar
+RUN Get-ChildItem uv-* | Move-Item -Destination .
 
 # Point UV to Python
 ENV UV_PYTHON="C:\\usr\\src\\windows\\python"
