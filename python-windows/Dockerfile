@@ -8,7 +8,7 @@ RUN Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/down
 RUN Start-Process -FilePath .\GitInstaller.exe -ArgumentList '/VERYSILENT', '/NORESTART', '/SUPPRESSMSGBOXES' -Wait
 
 # Add Git Bash to PATH
-RUN setx PATH "$($env:PATH);C:\\Program Files\\Git\\bin;C:\\Program Files\\Git\\usr\\bin"
+RUN setx PATH "$($env:PATH);'C:\\Program Files\\Git\\bin';'C:\\Program Files\\Git\\usr\\bin'"
 
 SHELL ["C:\\Program Files\\Git\\bin\\bash.exe", "-c"]
 
