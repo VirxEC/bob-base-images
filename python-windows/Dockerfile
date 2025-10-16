@@ -12,16 +12,12 @@ WORKDIR "C:\\usr\\src\\windows"
 # Install python
 RUN Invoke-WebRequest "https://github.com/astral-sh/python-build-standalone/releases/download/20251014/cpython-3.12.12+20251014-x86_64-pc-windows-msvc-install_only_stripped.tar.gz" -OutFile python.tar.gz
 RUN New-Item -ItemType Directory -Path python;
-RUN gzip -d -c python.tar.gz > python.tar
-RUN tar -xf python.tar -C python
-RUN Remove-Item python.tar.gz, python.tar
+RUN tar -xzf python.tar.gz -C python
 
 # Install uv
 RUN Invoke-WebRequest "https://github.com/astral-sh/uv/releases/download/0.9.3/uv-x86_64-pc-windows-msvc.zip" -OutFile uv.tar.gz
 RUN New-Item -ItemType Directory -Path uv;
-RUN gzip -d -c uv.tar.gz > uv.tar
-RUN tar -xf uv.tar -C uv
-RUN Remove-Item uv.tar.gz, uv.tar
+RUN tar -xzf uv.tar.gz -C uv
 RUN Get-ChildItem uv-* | Move-Item -Destination .
 
 # Point UV to Python
