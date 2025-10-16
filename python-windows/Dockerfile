@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows/servercore:ltsc2019
+FROM mcr.microsoft.com/windows/servercore:20H2
 
 # Switch to PowerShell
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop';"]
