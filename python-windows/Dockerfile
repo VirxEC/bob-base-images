@@ -6,7 +6,7 @@ SHELL ["pwsh", "-Command"]
 WORKDIR "C:\\tools"
 
 # Download & install Git
-RUN Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/latest/download/Git-2.45.2-64-bit.exe" -OutFile "GitInstaller.exe"
+RUN Invoke-WebRequest -Uri "https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.2/Git-2.51.0.2-64-bit.exe" -OutFile "GitInstaller.exe"
 RUN Start-Process -FilePath .\GitInstaller.exe -ArgumentList '/VERYSILENT', '/NORESTART', '/SUPPRESSMSGBOXES' -Wait
 
 # Add Git Bash to PATH
