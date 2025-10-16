@@ -33,3 +33,29 @@ jobs:
         echo "Building and pushing image for ${{ matrix.docker.dir }} with name ${{ matrix.docker.name }}"
         docker build -f ${{ matrix.docker.dir }}/Dockerfile -t ghcr.io/$repo_name/${{ matrix.docker.name }}:v2 .
         docker push ghcr.io/$repo_name/${{ matrix.docker.name }}:v2
+
+  build-windows:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        docker: [ { dir: python-windows, name: python-windows }, ]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and Push Docker image
+      shell: pwsh
+      run: |
+        $repo_name = "${{ github.repository }}".ToLower()
+        Write-Host "Building and pushing image for ${{ matrix.docker.dir }} with name ${{ matrix.docker.name }}"
+        docker build -f "${{ matrix.docker.dir }}/Dockerfile" -t "ghcr.io/$repo_name/${{ matrix.docker.name }}:v2" .
+        docker push "ghcr.io/$repo_name/${{ matrix.docker.name }}:v2"
